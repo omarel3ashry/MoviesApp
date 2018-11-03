@@ -10,11 +10,11 @@ import android.view.View;
 public class ItemOffsetDecoration extends RecyclerView.ItemDecoration {
     private int mItemOffset;
 
-    public ItemOffsetDecoration(int itemOffset) {
+    private ItemOffsetDecoration(int itemOffset) {
         mItemOffset = itemOffset;
     }
 
-    public ItemOffsetDecoration(@NonNull Context context, @DimenRes int itemOffsetId) {
+    ItemOffsetDecoration(@NonNull Context context, @DimenRes int itemOffsetId) {
         this(context.getResources().getDimensionPixelSize(itemOffsetId));
     }
 

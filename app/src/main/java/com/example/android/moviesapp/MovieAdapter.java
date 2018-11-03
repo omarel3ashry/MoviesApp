@@ -1,7 +1,5 @@
 package com.example.android.moviesapp;
 
-import android.content.Context;
-import android.graphics.Movie;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +15,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     private List<Movies> moviesList;
     private final MovieAdapterOnClickHandler mClickHandler;
 
-    public MovieAdapter(List<Movies> movies, MovieAdapterOnClickHandler clickHandler) {
+    MovieAdapter(List<Movies> movies, MovieAdapterOnClickHandler clickHandler) {
         moviesList = new ArrayList<>();
         moviesList.addAll(movies);
         mClickHandler = clickHandler;
@@ -46,9 +44,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView MoviePoster;
 
-        public MovieViewHolder(View itemView) {
+        MovieViewHolder(View itemView) {
             super(itemView);
             MoviePoster = itemView.findViewById(R.id.movie_poster);
+            itemView.setOnClickListener(this);
         }
 
         void bind(int position) {

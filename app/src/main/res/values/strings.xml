@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name">MoviesApp</string>
     <string name="movie_poster">Movie Poster</string>
-    <string name="loading_data">Loading Data...</string>
+    <string name="loading_data">Loading Data…</string>
+    <string name="most_popular">Most Popular Movies</string>
+    <string name="top_rated">Top Rated Movies</string>
+    <string name="rate">Rate\u0020</string>
+    <string name="released">Released</string>
+    <string name="error_loading_data">Error Loading Data!</string>
+    <string name="retry">Retry</string>
 </resources>

@@ -1,8 +1,8 @@
 package com.example.android.moviesapp;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -30,9 +30,12 @@ public class DetailActivity extends AppCompatActivity {
         intent = getIntent();
         if (intent != null) {
             if (intent.hasExtra("movieDetails")) {
-                movies = intent.getParcelableExtra("movieDetails");
+                Bundle bundle = intent.getExtras();
+                assert bundle != null;
+                movies = bundle.getParcelable("movieDetails");
             }
         }
+        assert movies != null;
         mMovieTitle.setText(movies.getTitle());
         mOverview.setText(movies.getOverview());
         mRateAverage.setText(movies.getRate());

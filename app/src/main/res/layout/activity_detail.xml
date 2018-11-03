@@ -1,49 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginEnd="15dp"
-    android:layout_marginStart="15dp"
-    android:orientation="vertical"
-    tools:context=".DetailActivity">
+    android:layout_height="wrap_content">
 
-    <LinearLayout
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
-        android:layout_marginTop="15dp"
-        android:orientation="horizontal">
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
+        android:orientation="vertical"
+        tools:context=".DetailActivity">
 
-        <TextView
-            android:id="@+id/movie_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="30sp"
-            tools:text="MovieTitle" />
 
-        <TextView
-            android:id="@+id/movie_rate"
+
+            <TextView
+                android:id="@+id/movie_title"
+                style="@style/DetailsStyle"
+                android:textColor="@android:color/black"
+                android:textSize="40sp"
+                tools:text="MovieTitle" />
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:gravity="end"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
+            <TextView
+                style="@style/DetailsStyle"
+                android:layout_width="0dp"
+                android:layout_gravity="end"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:text="@string/rate"
+                android:textColor="@android:color/holo_green_dark"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/movie_rate"
+                style="@style/DetailsStyle"
+                android:layout_gravity="end"
+                android:gravity="end"
+                android:textColor="@android:color/holo_green_dark"
+                android:textSize="25sp"
+                tools:text="rating" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/overview"
+            style="@style/DetailsStyle"
+            android:fontFamily="casual"
+            android:textSize="20sp"
+            tools:text="overview" />
+
+        <TextView
+            style="@style/DetailsStyle"
+            android:layout_marginTop="13dp"
+            android:text="@string/released"
+            android:textColor="@android:color/black"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/release_date"
+            style="@style/DetailsStyle"
             android:textSize="25sp"
-            tools:text="rating" />
+            android:textColor="@android:color/black"
+            tools:text="release date" />
+
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/overview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="25sp"
-        tools:text="overview" />
-
-    <TextView
-        android:id="@+id/release_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        tools:text="release date" />
-
-</LinearLayout>
+</ScrollView>

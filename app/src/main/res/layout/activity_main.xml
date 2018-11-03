@@ -1,10 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center_horizontal"
     tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/err_load"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/error_loading_data" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/err_load"
+        android:id="@+id/retry_btn"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:text="@string/retry" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recview"
@@ -16,6 +32,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:layout_gravity="center"
         android:orientation="vertical">
 
@@ -32,4 +49,4 @@
             android:text="@string/loading_data" />
     </LinearLayout>
 
-</FrameLayout>
+</RelativeLayout>
