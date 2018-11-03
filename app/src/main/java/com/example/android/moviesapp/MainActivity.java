@@ -40,9 +40,9 @@ public class MainActivity extends AppCompatActivity implements
     private MovieAdapter movieAdapter;
     ItemOffsetDecoration itemDecoration;
     private static final int LOADER_ID = 0;
-    private static final String popularURL = "https://api.themoviedb.org/3/movie/popular?api_key=99da60832bacd6b5001049dc06c1442e";
-    private static final String topRatedURL = "https://api.themoviedb.org/3/movie/top_rated?api_key=99da60832bacd6b5001049dc06c1442e";
-    private static String URL = "https://api.themoviedb.org/3/movie/popular?api_key=99da60832bacd6b5001049dc06c1442e";
+    private static final String popularURL = "https://api.themoviedb.org/3/movie/popular?api_key=";
+    private static final String topRatedURL = "https://api.themoviedb.org/3/movie/top_rated?api_key=";
+    private static String URL = "https://api.themoviedb.org/3/movie/popular?api_key=";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
