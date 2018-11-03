@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements
     Button retryBtn;
     private MovieAdapter movieAdapter;
     ItemOffsetDecoration itemDecoration;
+    NetworkInfo networkInfo;
     private static final int LOADER_ID = 0;
     private static final String popularURL = "https://api.themoviedb.org/3/movie/popular?api_key=";
     private static final String topRatedURL = "https://api.themoviedb.org/3/movie/top_rated?api_key=";
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements
 
         ConnectivityManager connectivityManager = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
         assert connectivityManager != null;
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        networkInfo = connectivityManager.getActiveNetworkInfo();
 
         if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             MoviesList.setLayoutManager(new GridLayoutManager(this, 3));
@@ -76,6 +77,8 @@ public class MainActivity extends AppCompatActivity implements
             retryBtn.setVisibility(View.GONE);
             getLoaderManager().initLoader(LOADER_ID, null, this).forceLoad();
         } else {
+            progressBar.setVisibility(View.GONE);
+            loadData.setVisibility(View.GONE);
             errLoad.setVisibility(View.VISIBLE);
             retryBtn.setVisibility(View.VISIBLE);
 
@@ -84,6 +87,7 @@ public class MainActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
                 getLoaderManager().restartLoader(LOADER_ID, null, MainActivity.this).forceLoad();
+
             }
         });
 
@@ -125,6 +129,8 @@ public class MainActivity extends AppCompatActivity implements
             movieAdapter.updateMovies(data);
             progressBar.setVisibility(View.GONE);
             loadData.setVisibility(View.GONE);
+            errLoad.setVisibility(View.GONE);
+            retryBtn.setVisibility(View.GONE);
         }
 
     }
