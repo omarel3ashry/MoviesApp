@@ -15,13 +15,19 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".DetailActivity"
-            android:label="Detail Activity">
+            android:label="Movie Details">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.android.moviesapp.MainActivity" />
+        </activity>
+        <activity
+            android:name=".SettingsActivity"
+            android:label="Settings">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.android.moviesapp.MainActivity" />

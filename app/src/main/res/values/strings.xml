@@ -2,10 +2,19 @@
     <string name="app_name">MoviesApp</string>
     <string name="movie_poster">Movie Poster</string>
     <string name="loading_data">Loading Data…</string>
-    <string name="most_popular">Most Popular Movies</string>
-    <string name="top_rated">Top Rated Movies</string>
     <string name="rate">Rate\u0020</string>
-    <string name="released">Released</string>
+    <string name="released">Released\u0020</string>
     <string name="error_loading_data">Error Loading Data!</string>
     <string name="retry">Retry</string>
+    <string name="movie_thumbnail">Movie Thumbnail Picture</string>
+    <string name="settings">Settings</string>
+
+    <string name="sort_by_popular_title">Most Popular</string>
+    <string name="sort_by_rated_title">Top Rated</string>
+
+    <string name="sort_by_popular_value">popular</string>
+    <string name="sort_by_rated_value">top_rated</string>
+
+    <string name="sort_by_key">sort-by</string>
+    <string name="sort_by_title">Sort by</string>
 </resources>

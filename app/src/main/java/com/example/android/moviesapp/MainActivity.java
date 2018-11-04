@@ -4,10 +4,13 @@ import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -41,9 +44,7 @@ public class MainActivity extends AppCompatActivity implements
     ItemOffsetDecoration itemDecoration;
     NetworkInfo networkInfo;
     private static final int LOADER_ID = 0;
-    private static final String popularURL = "https://api.themoviedb.org/3/movie/popular?api_key=";
-    private static final String topRatedURL = "https://api.themoviedb.org/3/movie/top_rated?api_key=";
-    private static String URL = "https://api.themoviedb.org/3/movie/popular?api_key=";
+    public static String URL = "https://api.themoviedb.org/3/movie";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +82,6 @@ public class MainActivity extends AppCompatActivity implements
             loadData.setVisibility(View.GONE);
             errLoad.setVisibility(View.VISIBLE);
             retryBtn.setVisibility(View.VISIBLE);
-
         }
         retryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,12 +103,9 @@ public class MainActivity extends AppCompatActivity implements
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         switch (itemId) {
-            case R.id.popular_action:
-                URL = popularURL;
-                getLoaderManager().restartLoader(LOADER_ID, null, this).forceLoad();
-            case R.id.top_rated_action:
-                URL = topRatedURL;
-                getLoaderManager().restartLoader(LOADER_ID, null, this).forceLoad();
+            case R.id.settings_action:
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -119,7 +116,16 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public Loader<List<Movies>> onCreateLoader(int id, Bundle args) {
-        return new MoviesLoader(MainActivity.this, URL);
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        String sortBy = sharedPref.getString(
+                getString(R.string.sort_by_key),
+                getString(R.string.sort_by_popular_value));
+        Uri uri = Uri.parse(URL);
+        Uri.Builder builder = uri.buildUpon();
+        builder.appendPath(sortBy);
+        builder.appendQueryParameter("api_key", "your_key");
+
+        return new MoviesLoader(MainActivity.this, builder.toString());
     }
 
     @Override

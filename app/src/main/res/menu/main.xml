@@ -2,13 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/popular_action"
-        android:orderInCategory="1"
-        android:title="@string/most_popular"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/top_rated_action"
-        android:orderInCategory="2"
-        android:title="@string/top_rated"
-        app:showAsAction="never" />
+        android:id="@+id/settings_action"
+        android:icon="@drawable/ic_settings_white_24dp"
+        android:title="@string/settings"
+        app:showAsAction="ifRoom" />
 </menu>

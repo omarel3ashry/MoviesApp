@@ -3,7 +3,10 @@ package com.example.android.moviesapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,6 +21,8 @@ public class DetailActivity extends AppCompatActivity {
     TextView mRateAverage;
     @BindView(R.id.release_date)
     TextView mReleaseDate;
+    @BindView(R.id.movie_thumbnail)
+    ImageView mThumbnail;
     Intent intent;
     Movies movies;
 
@@ -40,7 +45,7 @@ public class DetailActivity extends AppCompatActivity {
         mOverview.setText(movies.getOverview());
         mRateAverage.setText(movies.getRate());
         mReleaseDate.setText(movies.getReleaseDate());
-
-
+        String moviePosterUrl = movies.getFullImageUrl();
+        Picasso.with(this).load(moviePosterUrl).into(mThumbnail);
     }
 }

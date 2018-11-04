@@ -16,5 +16,4 @@
         <item name="android:fontFamily">cursive</item>
     </style>
 
-    <style name="CustomTheme" parent="Theme.AppCompat.NoActionBar" />
 </resources>
