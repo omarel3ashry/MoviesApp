@@ -1,4 +1,4 @@
-package com.example.android.moviesapp;
+package com.example.android.moviesapp.ui;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+
+import com.example.android.moviesapp.R;
 
 public class SettingsActivity extends AppCompatActivity {
 

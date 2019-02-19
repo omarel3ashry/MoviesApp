@@ -1,4 +1,4 @@
-package com.example.android.moviesapp;
+package com.example.android.moviesapp.ui;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.example.android.moviesapp.R;
+import com.example.android.moviesapp.database.Movies;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -15,7 +17,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     private List<Movies> moviesList;
     private final MovieAdapterOnClickHandler mClickHandler;
 
-    MovieAdapter(List<Movies> movies, MovieAdapterOnClickHandler clickHandler) {
+    public MovieAdapter(List<Movies> movies, MovieAdapterOnClickHandler clickHandler) {
         moviesList = new ArrayList<>();
         moviesList.addAll(movies);
         mClickHandler = clickHandler;
@@ -61,7 +63,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         }
     }
 
-    void updateMovies(List<Movies> movies) {
+    public void updateMovies(List<Movies> movies) {
         moviesList.clear();
         moviesList.addAll(movies);
         notifyDataSetChanged();

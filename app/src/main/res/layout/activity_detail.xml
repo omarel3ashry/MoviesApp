@@ -10,7 +10,7 @@
         android:layout_marginEnd="15dp"
         android:layout_marginStart="15dp"
         android:orientation="vertical"
-        tools:context=".DetailActivity">
+        tools:context=".ui.DetailActivity">
 
         <TextView
             android:id="@+id/movie_title"
@@ -68,6 +68,12 @@
                 android:textColor="@android:color/holo_green_dark"
                 android:textSize="25sp"
                 tools:text="rating" />
+
+            <CheckBox
+                android:id="@+id/favorite_checkbox"
+                style="?android:attr/starStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
         <View
@@ -81,6 +87,27 @@
             android:fontFamily="casual"
             android:textSize="20sp"
             tools:text="overview" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@android:color/background_dark" />
+
+        <ListView
+
+            android:id="@+id/trailer_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="120dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@android:color/background_dark" />
+
+        <ListView
+            android:id="@+id/review_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
 
     </LinearLayout>

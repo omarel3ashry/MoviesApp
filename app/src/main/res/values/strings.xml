@@ -17,4 +17,6 @@
 
     <string name="sort_by_key">sort-by</string>
     <string name="sort_by_title">Sort by</string>
+    <string name="trailer_play_button">Trailer Play Button</string>
+    <string name="favorite">Favorite</string>
 </resources>

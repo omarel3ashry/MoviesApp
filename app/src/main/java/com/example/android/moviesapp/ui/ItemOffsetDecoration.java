@@ -1,4 +1,4 @@
-package com.example.android.moviesapp;
+package com.example.android.moviesapp.ui;
 
 import android.content.Context;
 import android.graphics.Rect;

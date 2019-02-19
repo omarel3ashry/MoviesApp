@@ -1,7 +1,11 @@
-package com.example.android.moviesapp;
+package com.example.android.moviesapp.util;
 
 import android.text.TextUtils;
 import android.util.Log;
+
+import com.example.android.moviesapp.database.Movies;
+import com.example.android.moviesapp.ui.review.Review;
+import com.example.android.moviesapp.ui.trailer.Trailer;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,7 +21,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-final class QueryUtil {
+public final class QueryUtil {
 
     private static final String LOG = QueryUtil.class.getSimpleName();
 
@@ -31,7 +35,7 @@ final class QueryUtil {
         return url;
     }
 
-    static List<Movies> fetchingData(String url) {
+    public static String fetchingData(String url) {
 
         String jsonResponse = "";
         try {
@@ -40,7 +44,7 @@ final class QueryUtil {
             Log.e(LOG, "Error closing input stream", e);
         }
 
-        return extractMovies(jsonResponse);
+        return jsonResponse;
     }
 
     private static String makeHttpRequest(URL url) throws IOException {
@@ -94,7 +98,7 @@ final class QueryUtil {
         return sb.toString();
     }
 
-    private static List<Movies> extractMovies(String jsonRes) {
+    public static List<Movies> extractMovies(String jsonRes) {
 
         List<Movies> movies = new ArrayList<>();
 
@@ -114,12 +118,55 @@ final class QueryUtil {
                 String voteAverage = object.getString("vote_average");
                 String overview = object.getString("overview");
                 String releaseDate = object.getString("release_date");
+                String movieId = object.getString("id");
                 movies.add(
-                        new Movies(posterPath, movieTitle, voteAverage, overview, releaseDate));
+                        new Movies(movieId, movieTitle, voteAverage, overview, posterPath, releaseDate));
             }
         } catch (JSONException e) {
             Log.e(LOG, "Problem parsing the movies JSON results", e);
         }
         return movies;
     }
+
+    public static List<Trailer> extractTrailer(String jsonRes) {
+        List<Trailer> trailer = new ArrayList<>();
+
+        if (TextUtils.isEmpty(jsonRes)) {
+            return null;
+        }
+        try {
+            JSONObject root = new JSONObject(jsonRes);
+            JSONArray results = root.getJSONArray("results");
+            for (int i = 0; i < results.length(); i++) {
+                JSONObject object = results.getJSONObject(i);
+                String label = object.getString("name");
+                String key = object.getString("key");
+                trailer.add(new Trailer(label, key));
+            }
+        } catch (JSONException e) {
+            Log.e(LOG, "Problem parsing the movies JSON results", e);
+        }
+        return trailer;
+    }
+
+    public static List<Review> extractReviews(String jsonRes) {
+        List<Review> reviews = new ArrayList<>();
+        if (TextUtils.isEmpty(jsonRes)) {
+            return null;
+        }
+        try {
+            JSONObject root = new JSONObject(jsonRes);
+            JSONArray results = root.getJSONArray("results");
+            for (int i = 0; i < results.length(); i++) {
+                JSONObject object = results.getJSONObject(i);
+                String authorName = object.getString("author");
+                String review = object.getString("content");
+                reviews.add(new Review(authorName, review));
+            }
+        } catch (JSONException e) {
+            Log.e(LOG, "Problem parsing the movies JSON results", e);
+        }
+        return reviews;
+    }
+
 }

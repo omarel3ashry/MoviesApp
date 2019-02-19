@@ -1,6 +1,8 @@
-package com.example.android.moviesapp;
+package com.example.android.moviesapp.ui;
 
 import android.app.LoaderManager;
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
@@ -8,18 +10,27 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.Bundle;
+import android.preference.ListPreference;
+import android.preference.Preference;
+import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.android.moviesapp.R;
+import com.example.android.moviesapp.database.MovieDatabase;
+import com.example.android.moviesapp.database.Movies;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<List<Movies>>, MovieAdapter.MovieAdapterOnClickHandler {
 
     @BindView(R.id.recview)
-    RecyclerView MoviesList;
+    RecyclerView moviesRecyclerView;
     @BindView(R.id.progress_bar)
     ProgressBar progressBar;
     @BindView(R.id.load_tv)
@@ -40,11 +51,16 @@ public class MainActivity extends AppCompatActivity implements
     TextView errLoad;
     @BindView(R.id.retry_btn)
     Button retryBtn;
+
     private MovieAdapter movieAdapter;
     ItemOffsetDecoration itemDecoration;
     NetworkInfo networkInfo;
     private static final int LOADER_ID = 0;
     public static String URL = "https://api.themoviedb.org/3/movie";
+    private MovieDatabase movieDb;
+    private List<Movies> moviesList;
+    public static String API_KEY;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,22 +73,23 @@ public class MainActivity extends AppCompatActivity implements
         networkInfo = connectivityManager.getActiveNetworkInfo();
 
         if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            MoviesList.setLayoutManager(new GridLayoutManager(this, 3));
+            moviesRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
             itemDecoration = new ItemOffsetDecoration(this, R.dimen.item_offset_portrait);
-            MoviesList.setPadding
+            moviesRecyclerView.setPadding
                     (getDimens(R.dimen.item_offset_portrait), getDimens(R.dimen.item_offset_portrait),
                             getDimens(R.dimen.item_offset_portrait), getDimens(R.dimen.item_offset_portrait));
         } else {
-            MoviesList.setLayoutManager(new GridLayoutManager(this, 4));
+            moviesRecyclerView.setLayoutManager(new GridLayoutManager(this, 4));
             itemDecoration = new ItemOffsetDecoration(this, R.dimen.item_offset_landscape);
-            MoviesList.setPadding
+            moviesRecyclerView.setPadding
                     (getDimens(R.dimen.item_offset_landscape), getDimens(R.dimen.item_offset_landscape),
                             getDimens(R.dimen.item_offset_landscape), getDimens(R.dimen.item_offset_landscape));
         }
+        moviesRecyclerView.addItemDecoration(itemDecoration);
 
-        MoviesList.addItemDecoration(itemDecoration);
         movieAdapter = new MovieAdapter(new ArrayList<Movies>(), this);
-        MoviesList.setAdapter(movieAdapter);
+        moviesRecyclerView.setAdapter(movieAdapter);
+
         if (networkInfo != null && networkInfo.isConnected()) {
             errLoad.setVisibility(View.GONE);
             retryBtn.setVisibility(View.GONE);
@@ -87,6 +104,39 @@ public class MainActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
                 getLoaderManager().restartLoader(LOADER_ID, null, MainActivity.this).forceLoad();
+            }
+        });
+        movieDb = MovieDatabase.getsInstance(getApplicationContext());
+
+
+    }
+
+    private List<Movies> checkCurrentList(boolean isChecked) {
+
+        if (isChecked) {
+            LiveData<List<Movies>> currentMovies = movieDb.movieDao().loadAllMovies();
+            return currentMovies.getValue();
+
+        } else {
+            return new ArrayList<>();
+        }
+    }
+
+    private void showFavorites() {
+
+        final LiveData<List<Movies>> movie = movieDb.movieDao().loadAllMovies();
+        movie.observe(this, new Observer<List<Movies>>() {
+            @Override
+            public void onChanged(@Nullable List<Movies> movies) {
+                Log.d("DB", "DB CHANGED");
+                if (movies != null && movies.size() != 0) {
+                    movieAdapter.updateMovies(movies);
+                    moviesRecyclerView.setAdapter(movieAdapter);
+                } else {
+                    Toast toast = Toast.makeText
+                            (MainActivity.this, "There is no favorite movies to show!", Toast.LENGTH_LONG);
+                    toast.show();
+                }
 
             }
         });
@@ -106,6 +156,19 @@ public class MainActivity extends AppCompatActivity implements
             case R.id.settings_action:
                 Intent intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
+            case R.id.favorite_action:
+                if (item.isChecked()) {
+                    getLoaderManager().restartLoader(LOADER_ID, null, MainActivity.this).forceLoad();
+                    errLoad.setVisibility(View.GONE);
+                    retryBtn.setVisibility(View.GONE);
+                    item.setChecked(false);
+                    item.setIcon(R.drawable.ic_star_border_white_24dp);
+                } else {
+                    showFavorites();
+                    item.setChecked(true);
+                    item.setIcon(R.drawable.ic_star_white_24dp);
+                }
+
         }
         return super.onOptionsItemSelected(item);
     }
@@ -116,16 +179,8 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public Loader<List<Movies>> onCreateLoader(int id, Bundle args) {
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        String sortBy = sharedPref.getString(
-                getString(R.string.sort_by_key),
-                getString(R.string.sort_by_popular_value));
-        Uri uri = Uri.parse(URL);
-        Uri.Builder builder = uri.buildUpon();
-        builder.appendPath(sortBy);
-        builder.appendQueryParameter("api_key", "your_key");
 
-        return new MoviesLoader(MainActivity.this, builder.toString());
+        return new MoviesLoader(MainActivity.this);
     }
 
     @Override
@@ -138,6 +193,7 @@ public class MainActivity extends AppCompatActivity implements
             errLoad.setVisibility(View.GONE);
             retryBtn.setVisibility(View.GONE);
         }
+
 
     }
 
@@ -152,4 +208,7 @@ public class MainActivity extends AppCompatActivity implements
         intent.putExtra("movieDetails", m);
         startActivity(intent);
     }
+
+
+
 }
