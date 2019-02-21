@@ -7,8 +7,8 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="15dp"
         android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
         android:orientation="vertical"
         tools:context=".ui.DetailActivity">
 
@@ -18,7 +18,7 @@
             android:layout_gravity="center"
             android:fontFamily="casual"
             android:textColor="@android:color/black"
-            android:textSize="25sp"
+            android:textSize="20sp"
             tools:text="MovieTitle" />
 
         <ImageView
@@ -26,8 +26,8 @@
             android:layout_width="130dp"
             android:layout_height="193dp"
             android:layout_gravity="center"
-            android:layout_marginBottom="5dp"
             android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             android:contentDescription="@string/movie_thumbnail"
             android:cropToPadding="true" />
 
@@ -46,13 +46,13 @@
                 style="@style/DetailsStyle"
                 android:text="@string/released"
                 android:textColor="@android:color/black"
-                android:textSize="20sp" />
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/release_date"
                 style="@style/DetailsStyle"
                 android:textColor="@android:color/black"
-                android:textSize="20sp"
+                android:textSize="15sp"
                 tools:text="Release date" />
 
             <TextView
@@ -60,13 +60,13 @@
                 android:layout_marginStart="50dp"
                 android:text="@string/rate"
                 android:textColor="@android:color/holo_green_dark"
-                android:textSize="17sp" />
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/movie_rate"
                 style="@style/DetailsStyle"
                 android:textColor="@android:color/holo_green_dark"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 tools:text="rating" />
 
             <CheckBox
@@ -85,7 +85,7 @@
             android:id="@+id/overview"
             style="@style/DetailsStyle"
             android:fontFamily="casual"
-            android:textSize="20sp"
+            android:textSize="15sp"
             tools:text="overview" />
 
         <View
@@ -94,10 +94,10 @@
             android:background="@android:color/background_dark" />
 
         <ListView
-
             android:id="@+id/trailer_list_view"
             android:layout_width="match_parent"
-            android:layout_height="120dp" />
+            android:layout_height="55dp"
+            android:minHeight="?android:attr/listPreferredItemHeight" />
 
         <View
             android:layout_width="match_parent"
@@ -108,7 +108,6 @@
             android:id="@+id/review_list_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
 
     </LinearLayout>
 </ScrollView>

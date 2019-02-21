@@ -6,15 +6,10 @@ import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.preference.ListPreference;
-import android.preference.Preference;
-import android.preference.PreferenceFragment;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -58,8 +53,7 @@ public class MainActivity extends AppCompatActivity implements
     private static final int LOADER_ID = 0;
     public static String URL = "https://api.themoviedb.org/3/movie";
     private MovieDatabase movieDb;
-    private List<Movies> moviesList;
-    public static String API_KEY;
+    public static final String API_KEY = "99da60832bacd6b5001049dc06c1442e";
 
 
     @Override
@@ -109,17 +103,6 @@ public class MainActivity extends AppCompatActivity implements
         movieDb = MovieDatabase.getsInstance(getApplicationContext());
 
 
-    }
-
-    private List<Movies> checkCurrentList(boolean isChecked) {
-
-        if (isChecked) {
-            LiveData<List<Movies>> currentMovies = movieDb.movieDao().loadAllMovies();
-            return currentMovies.getValue();
-
-        } else {
-            return new ArrayList<>();
-        }
     }
 
     private void showFavorites() {
@@ -208,7 +191,6 @@ public class MainActivity extends AppCompatActivity implements
         intent.putExtra("movieDetails", m);
         startActivity(intent);
     }
-
 
 
 }

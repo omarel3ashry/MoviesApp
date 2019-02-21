@@ -14,15 +14,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-// import com.example.android.moviesapp.database.MovieDatabase;
-import com.example.android.moviesapp.database.AppExecutors;
 import com.example.android.moviesapp.R;
+import com.example.android.moviesapp.database.AppExecutors;
 import com.example.android.moviesapp.database.MovieDatabase;
 import com.example.android.moviesapp.database.Movies;
 import com.example.android.moviesapp.ui.review.Review;
@@ -38,6 +36,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -109,32 +108,7 @@ public class DetailActivity extends AppCompatActivity {
             }
         });
         movieDb = MovieDatabase.getsInstance(getApplicationContext());
-//        favoriteCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                if (isChecked) {
-//                    AppExecutors.getInstance().diskIO().execute(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            movieDb.movieDao().insertMovie(movies);
-//                        }
-//                    });
-//                    Toast toast = Toast.makeText
-//                            (DetailActivity.this, "Movie has been added to fav", Toast.LENGTH_SHORT);
-//                    toast.show();
-//                } else {
-//                    AppExecutors.getInstance().diskIO().execute(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            movieDb.movieDao().deleteMovie(movies);
-//                        }
-//                    });
-//                    Toast toast = Toast.makeText
-//                            (DetailActivity.this, "Movie has been removed from fav", Toast.LENGTH_SHORT);
-//                    toast.show();
-//                }
-//            }
-//        });
+
         favoriteCheckBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

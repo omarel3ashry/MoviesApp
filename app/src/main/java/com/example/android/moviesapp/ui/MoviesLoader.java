@@ -7,12 +7,12 @@ import android.net.Uri;
 import android.preference.PreferenceManager;
 
 import com.example.android.moviesapp.R;
-import com.example.android.moviesapp.database.MovieDatabase;
 import com.example.android.moviesapp.database.Movies;
 import com.example.android.moviesapp.util.QueryUtil;
 
 import java.util.List;
 
+import static com.example.android.moviesapp.ui.MainActivity.API_KEY;
 import static com.example.android.moviesapp.ui.MainActivity.URL;
 
 public class MoviesLoader extends AsyncTaskLoader<List<Movies>> {
@@ -29,7 +29,7 @@ public class MoviesLoader extends AsyncTaskLoader<List<Movies>> {
         Uri uri = Uri.parse(URL);
         Uri.Builder builder = uri.buildUpon();
         builder.appendPath(sortBy);
-        builder.appendQueryParameter("api_key", "99da60832bacd6b5001049dc06c1442e");
+        builder.appendQueryParameter("api_key", API_KEY);
         return builder.build().toString();
     }
 

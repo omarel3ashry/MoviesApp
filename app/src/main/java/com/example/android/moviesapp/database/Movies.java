@@ -33,11 +33,6 @@ public class Movies implements Parcelable {
         this.releaseDate = releaseDate;
     }
 
-//    public Movies(@NonNull String movieId, String Title) {
-//        this.movieId = movieId;
-//        this.Title = Title;
-//    }
-
     public void setMovieId(@NonNull String movieId) {
         this.movieId = movieId;
     }
