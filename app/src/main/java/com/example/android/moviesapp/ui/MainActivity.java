@@ -53,7 +53,8 @@ public class MainActivity extends AppCompatActivity implements
     private static final int LOADER_ID = 0;
     public static String URL = "https://api.themoviedb.org/3/movie";
     private MovieDatabase movieDb;
-    public static final String API_KEY = "99da60832bacd6b5001049dc06c1442e";
+    // Put your own api_key here to be able to run the app
+    public static final String API_KEY = "api_key";
 
 
     @Override
